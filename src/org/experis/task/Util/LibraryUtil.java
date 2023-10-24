@@ -5,6 +5,9 @@ import org.experis.task.Library;
 import org.experis.task.OutOfSlotsException;
 import org.experis.task.WrongBookValueException;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class LibraryUtil {
 
     public static void validateValues(Book book) throws WrongBookValueException {
@@ -22,5 +25,19 @@ public class LibraryUtil {
     public static void validateAvailableSlots(Library library) throws OutOfSlotsException {
         if (library.getAvailableSlots() == 0)
             throw new OutOfSlotsException("No more slots available in library.");
+    }
+
+    public static void exportToTxt(Library library) {
+        try (PrintWriter out = new PrintWriter("Library export.txt")) {
+            for (Book book : library.getStorage()) {
+                out.println("Title: " + book.getTitle());
+                out.println("Pages: " + book.getPages());
+                out.println("Author: " + book.getAuthor());
+                out.println("Editor: " + book.getEditor());
+                out.println("------------------------");
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
     }
 }

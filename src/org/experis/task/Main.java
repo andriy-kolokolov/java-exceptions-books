@@ -17,49 +17,53 @@ public class Main {
         );
 
         while (true) {
-            System.out.println("Add new book ? yes/no: ");
-            if (sc.nextLine().equalsIgnoreCase("yes")) {
+            System.out.println("Adding new book... (type anything to continue else '0' for exit): ");
 
-                try {
-                    LibraryUtil.validateAvailableSlots(library);
+            if (sc.nextLine().equalsIgnoreCase("0")) break;
 
-                    Book book = new Book();
+            try {
+                LibraryUtil.validateAvailableSlots(library);
 
-                    System.out.println("Title: ");
-                    book.setTitle(sc.nextLine());
+                Book book = new Book();
 
-                    System.out.println("Pages: ");
-                    while (book.getPages() == null) {
-                        try {  // handle case when user types not integer value
-                            book.setPages(sc.nextInt());
-                            sc.nextLine(); // to consume the newline character
-                        } catch (InputMismatchException e) {
-                            System.err.println("Please enter a valid integer for the number of pages:");
-                            sc.nextLine(); // consume the invalid input
-                        }
+                System.out.println("Title: ");
+                book.setTitle(sc.nextLine());
+
+                System.out.println("Pages: ");
+                while (book.getPages() == null) {
+                    try {  // handle case when user types not integer value
+                        book.setPages(sc.nextInt());
+                        sc.nextLine(); // to consume the newline character
+                    } catch (InputMismatchException e) {
+                        System.err.println("Please enter a valid integer for the number of pages:");
+                        sc.nextLine(); // consume the invalid input
                     }
-                    System.out.println("Author: ");
-                    book.setAuthor(sc.nextLine());
-
-                    System.out.println("Editor: ");
-                    book.setEditor(sc.nextLine());
-
-                    library.insert(book);
-
-                } catch (LibraryException e) {
-                    System.err.println("Library error occurred : " + e.getMessage());
-                    e.printStackTrace();
-                    break;
                 }
-            } else {
-                System.out.println("Bye!");
+                System.out.println("Author: ");
+                book.setAuthor(sc.nextLine());
+
+                System.out.println("Editor: ");
+                book.setEditor(sc.nextLine());
+
+                library.insert(book);
+
+            } catch (LibraryException e) {
+                System.err.println("Library error occurred : " + e.getMessage());
+                e.printStackTrace();
                 break;
             }
 
             if (library.getAvailableSlots() == 0) {
                 System.out.println("[WARN] : Library is full");
             }
+
+            System.out.println("Do you want to export library to txt (yes/no) ?");
+            if (sc.nextLine().equalsIgnoreCase("yes")) {
+                LibraryUtil.exportToTxt(library);
+                break;
+            }
         }
+        System.out.println("Bye!");
         sc.close();
     }
 }

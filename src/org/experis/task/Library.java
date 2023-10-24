@@ -35,7 +35,7 @@ public class Library {
         return booksCount;
     }
 
-    public void exportToTxt() {
-
+    public ArrayList<Book> getStorage() {
+        return storage;
     }
 }
