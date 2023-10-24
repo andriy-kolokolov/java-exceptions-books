@@ -1,5 +1,6 @@
 package org.experis.task;
 
+import org.experis.task.Util.FileUtils;
 import org.experis.task.Util.LibraryUtil;
 
 import org.experis.task.LibraryException;
@@ -60,7 +61,15 @@ public class Main {
             System.out.println("Do you want to export library to txt (yes/no) ?");
             if (sc.nextLine().equalsIgnoreCase("yes")) {
                 LibraryUtil.exportToTxt(library);
-                break;
+
+                System.out.println("Library exported successfully. Do you want read a file? (yes/no)");
+                if (sc.nextLine().equalsIgnoreCase("yes")) {
+                    System.out.println("Insert file path ( library_export.txt ): ");
+                    FileUtils.displayFileContent(sc.nextLine());
+                }
+
+                System.out.println("Continue/Exit ? Type anything or 'no' to exit: ");
+                if (sc.nextLine().equalsIgnoreCase("no")) break;
             }
         }
         System.out.println("Bye!");

@@ -28,7 +28,7 @@ public class LibraryUtil {
     }
 
     public static void exportToTxt(Library library) {
-        try (PrintWriter out = new PrintWriter("Library export.txt")) {
+        try (PrintWriter out = new PrintWriter("library_export.txt")) {
             for (Book book : library.getStorage()) {
                 out.println("Title: " + book.getTitle());
                 out.println("Pages: " + book.getPages());
